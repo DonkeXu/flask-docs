@@ -156,8 +156,11 @@ class ApiDoc(object):
 
                 # Api
                 for rule in app.url_map.iter_rules():
-                    f = str(rule).split('/')[1]
-                    if f not in current_app.config['API_DOC_MEMBER']:
+                    f = None
+                    for i in current_app.config['API_DOC_MEMBER']:
+                        if str(rule).startswith(i):
+                            f = i
+                    if not f:
                         continue
 
                     if f.capitalize() not in dataDict:
